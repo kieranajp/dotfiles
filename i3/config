@@ -1,0 +1,239 @@
+set $mod Mod4
+font pango:Hack Nerd Font Mono, FontAwesome 10
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec termite
+for_window [class="FloatingTerm"] floating enable
+bindsym $mod+grave exec termite --class FloatingTerm
+
+# focus follows mouse
+focus_follows_mouse no
+mouse_warping none
+
+# kill focused window
+bindsym $mod+q kill
+
+bindsym $mod+d exec --no-startup-id "exec fish -c 'rofi -show drun'"
+bindsym $mod+Shift+d exec --no-startup-id "$HOME/.config/rofi/scripts.sh"
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+bindsym $mod+Left workspace prev
+bindsym $mod+Right workspace next
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+bindsym $mod+Shift+Left move window to workspace prev
+bindsym $mod+Shift+Right move window to workspace next
+
+bindsym $mod+Control+Left move workspace to output left
+bindsym $mod+Control+Right move workspace to output right
+
+# split in vertical orientation
+bindsym $mod+v split toggle
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+Shift+a layout toggle split
+bindsym $mod+Shift+s layout tabbed
+#bindsym $mod+Shift+d layout stacked
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+bindsym $mod+s focus child
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+z exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# lock
+bindsym $mod+Control+l exec betterlockscreen -l dim
+
+# sleep
+set $mode_system System (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+    bindsym e exec --no-startup-id i3exit logout, mode "default"
+    bindsym s exec --no-startup-id i3exit suspend, mode "default"
+    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+    bindsym r exec --no-startup-id i3exit reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Shift+v mode "$mode_system"
+
+# resize window (you can also use the mouse for that)
+bindsym $mod+r mode "resize"
+mode "resize" {
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+# move floating windows with keys
+bindsym $mod+m mode "move" focus floating
+mode "move" {
+    bindsym $mod+Tab focus right
+
+    bindsym Left  move left
+    bindsym Down  move down
+    bindsym Up    move up
+    bindsym Right move right
+
+    bindsym h     move left
+    bindsym j     move down
+    bindsym k     move up
+    bindsym l     move right
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+hide_edge_borders smart
+
+for_window [class="^.*"] border pixel 1
+for_window [class="sxiv"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences$"] floating enable
+for_window [title="Authy"] floating enable
+for_window [floating] border pixel 1
+
+# Gaps
+gaps inner 16
+# No gaps for single window
+smart_gaps on
+# Remove Window title
+new_window 1pixel
+# Remove the borders for single window
+hide_edge_borders smart
+
+bindsym $mod+plus		 gaps outer current plus 5
+bindsym $mod+Shift+plus  gaps inner current plus 5
+bindsym $mod+minus       gaps outer current minus 5
+bindsym $mod+Shift+minus gaps inner current minus 5
+
+## Multimedia Keys
+
+# volume
+bindsym XF86AudioLowerVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-5%'
+bindsym XF86AudioRaiseVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+5%'
+bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+# Screen brightness controls
+bindsym XF86MonBrightnessDown exec light -U 5
+bindsym XF86MonBrightnessUp exec light -A 5
+
+# App shortcuts
+bindsym $mod+w exec env MOZ_USE_XINPUT2=1 /usr/lib/firefox/firefox
+# interactive screenshot by pressing printscreen
+bindsym Print exec /usr/bin/gnome-screenshot -i
+# crop-area screenshot by pressing Mod + printscreen
+bindsym --release $mod+Print exec /usr/bin/gnome-screenshot -a
+
+# Autostart apps
+exec --no-startup-id betterlockscreen -w
+exec --no-startup-id xset r rate 200 60
+exec --no-startup-id "clipit -n"
+exec --no-startup-id unclutter
+#exec --no-startup-id picom --backend glx --glx-no-stencil --xrender-sync-fence
+
+# Theme
+
+# set primary gruvbox colorscheme colors
+set $bg #1A1A1A
+set $red #cc241d
+set $green #98971a
+set $yellow #d79921
+set $pink #d33682
+set $blue #458588
+set $purple #bd93fa
+set $aqua #689d68
+set $gray #a89984
+set $darkgray #1d2021
+set $white #ffffff
+
+bar {
+  status_command i3status-rs ~/.config/i3status-rs/config.toml
+  position top
+  colors {
+    # bar background color
+    background $bg
+    # text color used for blocks that do not have a color specified.
+    statusline $pink
+    # workspaces section
+    #                    border    backgr.   text
+    focused_workspace    $purple   $purple   $darkgray
+    inactive_workspace   $darkgray $darkgray $pink
+    active_workspace     $darkgray $darkgray $pink
+    urgent_workspace     $red      $red      $bg
+  }
+}
+
+# gruvbox
+# class                 border    backgr    text      indicator child_border
+client.focused          $purple   $purple   $darkgray $purple   $darkgray
+client.focused_inactive $darkgray $darkgray $pink     $purple   $darkgray
+client.unfocused        $darkgray $darkgray $pink     $purple   $darkgray
+client.urgent           $red      $red      $white    $red      $red
+
+# window title config
+title_align center
+for_window [class=".*"] title_format <small>%title</small>
+

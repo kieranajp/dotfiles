@@ -1,0 +1,5 @@
+Configure Displays,$HOME/.config/rofi/monitor.sh
+Connect Headphones,$HOME/.config/rofi/bluetooth.sh "00:18:09:31:75:D6"
+Search Emoji,$HOME/.config/rofi/emoji.sh
+WiFi,rofi-wifi-menu
+
