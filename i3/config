@@ -4,6 +4,7 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec termite
+for_window [window_role="pop-up"] floating enable
 for_window [class="FloatingTerm"] floating enable
 bindsym $mod+grave exec termite --class FloatingTerm
 
@@ -16,6 +17,7 @@ bindsym $mod+q kill
 
 bindsym $mod+d exec --no-startup-id "exec fish -c 'rofi -show drun'"
 bindsym $mod+Shift+d exec --no-startup-id "$HOME/.config/rofi/scripts.sh"
+bindsym $mod+Shift+c exec --no-startup-id "rofi -modi 'clipboard:greenclip print' -show clipboard"
 
 # change focus
 bindsym $mod+h focus left
@@ -24,7 +26,9 @@ bindsym $mod+k focus up
 bindsym $mod+l focus right
 
 bindsym $mod+Left workspace prev
+bindsym $mod+Alt+h workspace prev
 bindsym $mod+Right workspace next
+bindsym $mod+Alt+l workspace next
 
 # move focused window
 bindsym $mod+Shift+h move left
@@ -36,7 +40,9 @@ bindsym $mod+Shift+Left move window to workspace prev
 bindsym $mod+Shift+Right move window to workspace next
 
 bindsym $mod+Control+Left move workspace to output left
+bindsym $mod+Control+h move workspace to output left
 bindsym $mod+Control+Right move workspace to output right
+bindsym $mod+Control+l move workspace to output right
 
 # split in vertical orientation
 bindsym $mod+v split toggle
@@ -84,7 +90,7 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+#bindsym $mod+Shift+c reload
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
@@ -93,7 +99,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+z exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # lock
-bindsym $mod+Control+l exec betterlockscreen -l dim
+#bindsym $mod+Control+backspace exec betterlockscreen -l dim
 
 # sleep
 set $mode_system System (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
@@ -177,21 +183,27 @@ bindsym XF86AudioPrev exec playerctl previous
 
 # volume
 bindsym XF86AudioLowerVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-5%'
+bindsym Shift+XF86AudioLowerVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-1%'
 bindsym XF86AudioRaiseVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+5%'
+bindsym Shift+XF86AudioRaiseVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+1%'
 bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 # Screen brightness controls
+bindsym Shift+XF86MonBrightnessDown exec light -U 1
 bindsym XF86MonBrightnessDown exec light -U 5
+bindsym Shift+XF86MonBrightnessUp exec light -A 1
 bindsym XF86MonBrightnessUp exec light -A 5
 
 # App shortcuts
-bindsym $mod+w exec env MOZ_USE_XINPUT2=1 /usr/lib/firefox/firefox
+bindsym $mod+w exec /usr/bin/vivaldi-stable
+#bindsym $mod+w exec /usr/bin/chromium
 # interactive screenshot by pressing printscreen
-bindsym Print exec /usr/bin/gnome-screenshot -i
+bindsym Print exec /usr/bin/xfce4-screenshooter
 # crop-area screenshot by pressing Mod + printscreen
-bindsym --release $mod+Print exec /usr/bin/gnome-screenshot -a
+bindsym --release $mod+Print exec /usr/bin/xfce4-screenshooter -cr
 
 # Autostart apps
+exec --no-startup-id rescuetime
 exec --no-startup-id betterlockscreen -w
 exec --no-startup-id xset r rate 200 60
 exec --no-startup-id "clipit -n"
