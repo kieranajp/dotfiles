@@ -1,0 +1,79 @@
+[theme]
+name = "slick"
+[theme.overrides]
+idle_bg = "#282828"
+#separator_bg = "#282828"
+info_bg = "#282828"
+good_bg = "#96C8AC"
+warning_bg = "#EDA4BD"
+#critical_bg = "#282828"
+
+[icons]
+name = "awesome"
+
+[[block]]
+block = "music"
+player = "spotify"
+buttons = ["play", "next"]
+
+#[[block]]
+#block = "weather"
+#format = "{weather} ({location}) {temp}°, {wind} m/s {direction}"
+#service = { name = "openweathermap", api_key = "3a289ac4c512e8111fc37268a63f9100", city_id = "2950159", units = "metric" }
+#
+#[[block]]
+#block = "bluetooth"
+#mac = "FB:E2:F6:40:B0:33"
+#
+#[[block]]
+#block = "bluetooth"
+#mac = "00:18:09:31:75:D6"
+
+[[block]]
+block = "cpu"
+interval = 5
+
+[[block]]
+block = "memory"
+display_type = "memory"
+warning_mem = 90
+format_mem = "{Mup}%"
+format_swap = "{SUp}%"
+
+[[block]]
+block = "net"
+device = "wlp2s0"
+speed_up = false
+interval = 10
+
+#[[block]]
+#block = "xrandr"
+#icons = true
+#resolution = false
+#interval = 2
+
+[[block]]
+block = "backlight"
+device = "intel_backlight"
+
+[[block]]
+block = "toggle"
+
+text = "4k"
+command_state = "xrandr | grep 'DP1 connected 38' | grep -v eDP1"
+command_on = "xrandr --output eDP1 --auto --output DP1 --auto --left-of eDP1"
+command_off = "xrandr --output eDP1 --auto --output DP1 --off"
+interval = 600
+
+[[block]]
+block = "sound"
+
+[[block]]
+block = "battery"
+driver = "upower"
+format = "{percentage}% {time}"
+
+[[block]]
+block = "time"
+interval = 60
+format = "%a %d/%m %R"
